@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,11 +23,11 @@ public class Person {
     @Column(nullable = false, length = 255)
     private String surname;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String height;
 
-    @Temporal(TemporalType.DATE)
-    private LocalDate birthDate;
+    @Column(nullable = false)
+    private String birthDate;
 
     @ManyToOne
     @JoinColumn(name = "location_id")
@@ -34,7 +35,7 @@ public class Person {
 
     @ManyToMany
     @JoinTable(
-            name = "person_movie",
+            name = "screenwriter_movie",
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "movie_id")
     )
@@ -42,6 +43,11 @@ public class Person {
 
     @OneToMany(mappedBy = "actor")
     private Set<Role> roles;
+
+    public Person() {
+        this.movies = new HashSet<>(); // Initialize the set
+        this.roles = new HashSet<>(); // Initialize the set
+    }
 
     // Getters and Setters
 
@@ -65,7 +71,7 @@ public class Person {
         return height;
     }
 
-    public LocalDate getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
@@ -97,7 +103,7 @@ public class Person {
         this.height = height;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -107,6 +113,10 @@ public class Person {
 
     public void setMovies(Set<Movie> movies) {
         this.movies = movies;
+    }
+
+    public void addMovie(Movie movie) {
+        this.movies.add(movie);
     }
 
     public void setRoles(Set<Role> roles) {

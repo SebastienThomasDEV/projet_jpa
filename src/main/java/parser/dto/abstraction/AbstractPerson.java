@@ -8,6 +8,7 @@ public abstract class AbstractPerson {
     private String url;
     private NaissanceDto naissance;
 
+
     // Default constructor
     public AbstractPerson() {}
     public AbstractPerson(

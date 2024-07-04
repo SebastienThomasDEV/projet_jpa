@@ -7,11 +7,10 @@ public class ActorDto extends AbstractPerson {
     private String identite;
     private NaissanceDto naissance;
     private String url;
-    private final String height;
+    private String height;
 
     // Default constructor
     public ActorDto() {
-        this.height = "";
     }
 
     public ActorDto(
@@ -32,6 +31,7 @@ public class ActorDto extends AbstractPerson {
     public String setHeight(String height) {
         return height;
     }
+
 
     @Override
     public String toString() {

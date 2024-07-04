@@ -102,9 +102,16 @@ public class Parser {
                             movie.getGenres().add(g);
                         }
                     }
-                    for (RoleDto roleDto : movieDto.getRoles()) {
-                        if (DtoValidator.isRoleDtoValid(roleDto) && DtoValidator.isActorDtoValid(roleDto.getActeur())) {
-                            Role r = Mapper.findOrCreateActorRole(em, roleDto.getActeur(), persistedRoles);
+                    for (RealisateurDto realisateurDto : movieDto.getRealisateurs()) {
+                        if (DtoValidator.isRealisateurDtoValid(realisateurDto)) {
+                            Person p = Mapper.findOrCreateDirector(em, realisateurDto, persistedPersons);
+                            p.addMovie(movie);
+                        }
+                    }
+                    for (ActorDto actorDto : movieDto.getCastingPrincipal()) {
+                        if (DtoValidator.isActorDtoValid(actorDto)) {
+                            Person p = Mapper.findOrCreateActor(em, actorDto, persistedPersons);
+                            Role r = Mapper.findOrCreateRole(em, p, movie, actorDto, persistedRoles);
                             movie.getRoles().add(r);
                         }
                     }

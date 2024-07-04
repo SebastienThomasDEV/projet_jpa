@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManager;
 import parser.dto.*;
 import parser.dto.abstraction.AbstractPerson;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public abstract class Mapper {
@@ -91,6 +93,7 @@ public abstract class Mapper {
     }
 
 
+
     /**
      * Cette méthode permet de créer un lieu de tournage s'il n'existe pas déjà
      *
@@ -116,13 +119,40 @@ public abstract class Mapper {
     }
 
 
+
     /**
-     * Cette méthode permet de créer un réalisateur s'il n'existe pas déjà
+     * Cette méthode permet de créer une personne s'il n'existe pas déjà
      *
-     * @param em               : l'EntityManager
-     * @param realisateurDto   : le réalisateur à créer
+     * @param personDto : la personne à créer
+     * @return l'acteur créé
+     */
+    private static Person createPerson(EntityManager em, AbstractPerson personDto) {
+        Person actor = new Person();
+        try {
+            String[] actorFullName = personDto.getIdentite().split(" ");
+            actor.setName(actorFullName[0].trim());
+            actor.setSurname(actorFullName[1].trim());
+        } catch (Exception e) {
+            actor.setName(personDto.getIdentite().trim());
+            actor.setSurname("non renseigné");
+        }
+        actor.setUuid(personDto.getId());
+        if (!Objects.equals(personDto.getNaissance().getDateNaissance(), "")) {
+            actor.setBirthDate(personDto.getNaissance().getDateNaissance());
+        } else {
+            actor.setBirthDate("non renseigné");
+        }
+        actor.setBirthDate(personDto.getNaissance().getDateNaissance());
+        return actor;
+    }
+
+    /**
+     * Cette méthode permet de créer un realisateur s'il n'existe pas déjà
+     *
+     * @param em : l'EntityManager
+     * @param realisateurDto : le realisateur à créer
      * @param persistedPersons : l'ensemble des personnes déjà persistées
-     * @return le réalisateur créé ou trouvé
+     * @return le realisateur créé ou trouvé
      */
     public static Person findOrCreateDirector(EntityManager em, RealisateurDto realisateurDto, Set<Person> persistedPersons) {
         String uuid = realisateurDto.getId();
@@ -131,66 +161,65 @@ public abstract class Mapper {
                 return person;
             }
         }
-        Person newPerson = createPerson(realisateurDto);
+        Person newPerson = createPerson(em, realisateurDto);
         em.persist(newPerson);
         persistedPersons.add(newPerson);
         return newPerson;
     }
 
-
     /**
      * Cette méthode permet de créer un acteur s'il n'existe pas déjà
      *
-     * @param em             : l'EntityManager
-     * @param actorDto       : l'acteur à créer
-     * @param persistedRoles : l'ensemble des rôles déjà persistés
+     * @param em : l'EntityManager
+     * @param actorDto : l'acteur à créer
+     * @param persistedPersons : l'ensemble des personnes déjà persistées
      * @return l'acteur créé ou trouvé
      */
-    public static Role findOrCreateActorRole(EntityManager em, ActorDto actorDto, Set<Role> persistedRoles) {
+    public static Person findOrCreateActor(EntityManager em, ActorDto actorDto, Set<Person> persistedPersons) {
         String uuid = actorDto.getId();
+        for (Person person : persistedPersons) {
+            if (person.getName().equals(uuid)) {
+                return person;
+            }
+        }
+        String height = actorDto.getHeight();
+        if (!Objects.equals(height, "")) {
+            actorDto.setHeight(height);
+        } else {
+            actorDto.setHeight("non renseigné");
+        }
+        Person newPerson = createPerson(em, actorDto);
+        em.persist(newPerson);
+        persistedPersons.add(newPerson);
+        return newPerson;
+    }
+
+    /**
+     * Cette méthode permet de créer un rôle s'il n'existe pas déjà
+     *
+     * @param em : l'EntityManager
+     * @param actor : l'acteur du rôle
+     * @param movie : le film du rôle
+     * @param actorDto : l'acteur du rôle
+     * @param persistedRoles : l'ensemble des rôles déjà persistés
+     * @return le rôle créé ou trouvé
+     */
+    public static Role findOrCreateRole(EntityManager em, Person actor, Movie movie, ActorDto actorDto, Set<Role> persistedRoles) {
+        String characterName = actorDto.getIdentite();
         for (Role role : persistedRoles) {
-            if (role.getActor().getName().equals(uuid)) {
+            if (role.getActor().equals(actor) && role.getMovie().equals(movie) && role.getCharacterName().equals(characterName)) {
                 return role;
             }
         }
         Role newRole = new Role();
-        newRole.setCharacterName(actorDto.getIdentite().trim());
-        Person actor = createPerson(actorDto);
-        em.persist(actor);
         newRole.setActor(actor);
+        newRole.setMovie(movie);
+        newRole.setCharacterName(characterName);
+        em.persist(newRole);
         persistedRoles.add(newRole);
         return newRole;
     }
 
-
-    /**
-     * Cette méthode permet de créer un acteur s'il n'existe pas déjà
-     *
-     * @param actorDto : l'acteur à créer
-     * @return l'acteur créé
-     */
-    private static Person createPerson(AbstractPerson actorDto) {
-        Person actor = new Person();
-        try {
-            String[] actorFullName = actorDto.getIdentite().split(" ");
-            actor.setName(actorFullName[0].trim());
-            actor.setSurname(actorFullName[1].trim());
-        } catch (Exception e) {
-            actor.setName(actorDto.getIdentite().trim());
-            actor.setSurname("");
-        }
-        actor.setUuid(actorDto.getId());
-        try {
-            actor.setBirthDate(DateParser.parseDate(actorDto.getNaissance().getDateNaissance()));
-        } catch (Exception e) {
-            actor.setBirthDate(null);
-        }
-        if (actorDto instanceof ActorDto) {
-            String height = ((ActorDto) actorDto).getHeight();
-            actor.setHeight(height);
-        }
-        return actor;
-    }
 
 
 }
