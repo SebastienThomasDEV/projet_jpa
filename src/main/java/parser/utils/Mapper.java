@@ -5,11 +5,19 @@ import jakarta.persistence.EntityManager;
 import parser.dto.*;
 import parser.dto.abstraction.AbstractPerson;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 public abstract class Mapper {
+
+
+    /**
+     * Cette méthode permet de créer un genre s'il n'existe pas déjà
+     *
+     * @param em : l'EntityManager
+     * @param genreName : le nom du genre
+     * @param persistedGenres : l'ensemble des genres déjà persistés
+     * @return le genre créé ou trouvé
+     */
     public static Genre findOrCreateGenre(EntityManager em, String genreName, Set<Genre> persistedGenres) {
         for (Genre genre : persistedGenres) {
             if (genre.getName().equals(genreName)) {
@@ -25,6 +33,15 @@ public abstract class Mapper {
     }
 
 
+
+    /**
+     * Cette méthode permet de créer un film s'il n'existe pas déjà
+     *
+     * @param em : l'EntityManager
+     * @param movieDto : le film à créer
+     * @param persistedMovies : l'ensemble des films déjà persistés
+     * @return le film créé ou trouvé
+     */
     public static Movie findOrCreateMovie(EntityManager em, MovieDto movieDto, Set<Movie> persistedMovies) {
         String movieName = movieDto.getNom();
         for (Movie movie : persistedMovies) {
@@ -48,6 +65,15 @@ public abstract class Mapper {
         return newMovie;
     }
 
+
+    /**
+     * Cette méthode permet de créer un pays s'il n'existe pas déjà
+     *
+     * @param em : l'EntityManager
+     * @param countryDto : le pays à créer
+     * @param persistedCountries : l'ensemble des pays déjà persistés
+     * @return le pays créé ou trouvé
+     */
     public static Country findOrCreateCountry(EntityManager em, CountryDto countryDto, Set<Country> persistedCountries) {
         String countryFullName = countryDto.getNom();
         for (Country country : persistedCountries) {
@@ -66,6 +92,15 @@ public abstract class Mapper {
     }
 
 
+
+    /**
+     * Cette méthode permet de créer un lieu de tournage s'il n'existe pas déjà
+     *
+     * @param em : l'EntityManager
+     * @param lieuTournageDto : le lieu de tournage à créer
+     * @param persistedLocations : l'ensemble des lieux de tournage déjà persistés
+     * @return le lieu de tournage créé ou trouvé
+     */
     public static Location findOrCreateLocation(EntityManager em, LieuTournageDto lieuTournageDto, Set<Location> persistedLocations) {
         String city = lieuTournageDto.getVille();
         String state = lieuTournageDto.getEtatDept();
@@ -83,6 +118,15 @@ public abstract class Mapper {
     }
 
 
+
+    /**
+     * Cette méthode permet de créer un réalisateur s'il n'existe pas déjà
+     *
+     * @param em : l'EntityManager
+     * @param realisateurDto : le réalisateur à créer
+     * @param persistedPersons : l'ensemble des personnes déjà persistées
+     * @return le réalisateur créé ou trouvé
+     */
     public static Person findOrCreateDirector(EntityManager em, RealisateurDto realisateurDto, Set<Person> persistedPersons) {
         String uuid = realisateurDto.getId();
         for (Person person : persistedPersons) {
@@ -97,8 +141,14 @@ public abstract class Mapper {
     }
 
 
-
-
+    /**
+     * Cette méthode permet de créer un acteur s'il n'existe pas déjà
+     *
+     * @param em : l'EntityManager
+     * @param actorDto : l'acteur à créer
+     * @param persistedRoles : l'ensemble des rôles déjà persistés
+     * @return l'acteur créé ou trouvé
+     */
     public static Role findOrCreateActorRole(EntityManager em, ActorDto actorDto, Set<Role> persistedRoles) {
         String uuid = actorDto.getId();
         for (Role role : persistedRoles) {
@@ -117,6 +167,12 @@ public abstract class Mapper {
     }
 
 
+    /**
+     * Cette méthode permet de créer un acteur s'il n'existe pas déjà
+     *
+     * @param actorDto : l'acteur à créer
+     * @return l'acteur créé
+     */
     private static Person createPerson(AbstractPerson actorDto) {
         Person actor = new Person();
         try {
@@ -128,8 +184,11 @@ public abstract class Mapper {
             actor.setSurname("");
         }
         actor.setUuid(actorDto.getId());
-        actor.setBirthDate(DateFormatter.parseDate(actorDto.getNaissance().getDateNaissance()));
-
+        actor.setBirthDate(DateParser.parseDate(actorDto.getNaissance().getDateNaissance()));
+        if (actorDto instanceof ActorDto) {
+            String height = ((ActorDto) actorDto).getHeight();
+            actor.setHeight(height);
+        }
         return actor;
     }
 

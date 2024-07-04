@@ -3,6 +3,7 @@ package imdb.entity;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -21,11 +22,11 @@ public class Person {
     @Column(nullable = false, length = 255)
     private String surname;
 
-    @Column(precision = 15, scale = 2)
-    private BigDecimal height;
+    @Column(nullable = false, length = 255)
+    private String height;
 
     @Temporal(TemporalType.DATE)
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @ManyToOne
     @JoinColumn(name = "location_id")
@@ -60,11 +61,11 @@ public class Person {
         return surname;
     }
 
-    public BigDecimal getHeight() {
+    public String getHeight() {
         return height;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
@@ -92,11 +93,11 @@ public class Person {
         this.surname = surname;
     }
 
-    public void setHeight(BigDecimal height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

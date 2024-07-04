@@ -19,30 +19,36 @@ import java.util.Set;
 
 public class Parser {
 
+
+    // Constante pour le nom de la base de données
     static String dbName = "jpa";
+
+    // Constante pour le nom du fichier JSON
     static String fileName = "data/films.json";
 
+    /**
+     * Cette méthode est le point d'entrée du programme
+     * Elle crée l'EntityManagerFactory et l'EntityManager
+     * Elle appelle les méthodes pour définir l'encodage de la base de données et pour lire le fichier JSON
+     *
+     * @param args : les arguments de la ligne de commande
+     */
     public static void main(String[] args) {
-        EntityManagerFactory factory = null;
-        EntityManager em = null;
 
-        try {
-            factory = Persistence.createEntityManagerFactory(dbName);
-            em = factory.createEntityManager();
+        try (EntityManagerFactory factory = Persistence.createEntityManagerFactory(dbName); EntityManager em = factory.createEntityManager()) {
             setCharacterEncoding(em);
             parseAndPersistMovies(em);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-            if (factory != null) {
-                factory.close();
-            }
         }
     }
 
+
+    /**
+     * Cette méthode permet de définir l'encodage de la base de données pour supporter les caractères spéciaux
+     *
+     * @param em : l'EntityManager
+     */
     private static void setCharacterEncoding(EntityManager em) {
         EntityTransaction transaction = em.getTransaction();
         try {
@@ -58,6 +64,12 @@ public class Parser {
     }
 
 
+    /**
+     * Cette méthode permet de lire le fichier JSON et de persister les données dans la base de données
+     * Elle utilise les méthodes de validation des DTOs et de mapping des DTOs aux entités
+     *
+     * @param em : l'EntityManager
+     */
     private static void parseAndPersistMovies(EntityManager em) {
         EntityTransaction transaction = em.getTransaction();
         try {

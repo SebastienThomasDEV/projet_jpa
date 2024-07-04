@@ -5,37 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e79071a-5129-4e9b-87f7-a8e413015d7e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/films.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/imdb/AbstractRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/imdb/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/imdb/entity/Country.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/imdb/entity/Genre.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/imdb/entity/Location.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/imdb/entity/Movie.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/imdb/entity/Person.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/imdb/entity/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/Parser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/dto/ActorDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/dto/CountryDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/dto/LieuTournageDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/dto/MovieDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/dto/NaissanceDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/dto/RealisateurDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/dto/RoleDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/dto/abstraction/AbstractPerson.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/utils/DateFormatter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/utils/DtoValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/utils/Mapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/imdb/entity/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/imdb/entity/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/utils/DateFormatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/utils/DateParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/utils/Mapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/utils/Mapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +103,8 @@
       <workItem from="1718712360756" duration="11639000" />
       <workItem from="1718809627247" duration="2000" />
       <workItem from="1719214769026" duration="1854000" />
-      <workItem from="1719560234377" duration="340000" />
+      <workItem from="1719560234377" duration="6500000" />
+      <workItem from="1719994384253" duration="18000" />
     </task>
     <servers />
   </component>
@@ -137,11 +114,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/imdb/entity/Person.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/parser/dto/abstraction/AbstractPerson.java</url>
           <line>4</line>
