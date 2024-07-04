@@ -13,8 +13,8 @@ public abstract class Mapper {
     /**
      * Cette méthode permet de créer un genre s'il n'existe pas déjà
      *
-     * @param em : l'EntityManager
-     * @param genreName : le nom du genre
+     * @param em              : l'EntityManager
+     * @param genreName       : le nom du genre
      * @param persistedGenres : l'ensemble des genres déjà persistés
      * @return le genre créé ou trouvé
      */
@@ -33,12 +33,11 @@ public abstract class Mapper {
     }
 
 
-
     /**
      * Cette méthode permet de créer un film s'il n'existe pas déjà
      *
-     * @param em : l'EntityManager
-     * @param movieDto : le film à créer
+     * @param em              : l'EntityManager
+     * @param movieDto        : le film à créer
      * @param persistedMovies : l'ensemble des films déjà persistés
      * @return le film créé ou trouvé
      */
@@ -69,8 +68,8 @@ public abstract class Mapper {
     /**
      * Cette méthode permet de créer un pays s'il n'existe pas déjà
      *
-     * @param em : l'EntityManager
-     * @param countryDto : le pays à créer
+     * @param em                 : l'EntityManager
+     * @param countryDto         : le pays à créer
      * @param persistedCountries : l'ensemble des pays déjà persistés
      * @return le pays créé ou trouvé
      */
@@ -92,12 +91,11 @@ public abstract class Mapper {
     }
 
 
-
     /**
      * Cette méthode permet de créer un lieu de tournage s'il n'existe pas déjà
      *
-     * @param em : l'EntityManager
-     * @param lieuTournageDto : le lieu de tournage à créer
+     * @param em                 : l'EntityManager
+     * @param lieuTournageDto    : le lieu de tournage à créer
      * @param persistedLocations : l'ensemble des lieux de tournage déjà persistés
      * @return le lieu de tournage créé ou trouvé
      */
@@ -118,12 +116,11 @@ public abstract class Mapper {
     }
 
 
-
     /**
      * Cette méthode permet de créer un réalisateur s'il n'existe pas déjà
      *
-     * @param em : l'EntityManager
-     * @param realisateurDto : le réalisateur à créer
+     * @param em               : l'EntityManager
+     * @param realisateurDto   : le réalisateur à créer
      * @param persistedPersons : l'ensemble des personnes déjà persistées
      * @return le réalisateur créé ou trouvé
      */
@@ -144,8 +141,8 @@ public abstract class Mapper {
     /**
      * Cette méthode permet de créer un acteur s'il n'existe pas déjà
      *
-     * @param em : l'EntityManager
-     * @param actorDto : l'acteur à créer
+     * @param em             : l'EntityManager
+     * @param actorDto       : l'acteur à créer
      * @param persistedRoles : l'ensemble des rôles déjà persistés
      * @return l'acteur créé ou trouvé
      */
@@ -159,7 +156,6 @@ public abstract class Mapper {
         Role newRole = new Role();
         newRole.setCharacterName(actorDto.getIdentite().trim());
         Person actor = createPerson(actorDto);
-        System.out.println(actor);
         em.persist(actor);
         newRole.setActor(actor);
         persistedRoles.add(newRole);
@@ -184,16 +180,17 @@ public abstract class Mapper {
             actor.setSurname("");
         }
         actor.setUuid(actorDto.getId());
-        actor.setBirthDate(DateParser.parseDate(actorDto.getNaissance().getDateNaissance()));
+        try {
+            actor.setBirthDate(DateParser.parseDate(actorDto.getNaissance().getDateNaissance()));
+        } catch (Exception e) {
+            actor.setBirthDate(null);
+        }
         if (actorDto instanceof ActorDto) {
             String height = ((ActorDto) actorDto).getHeight();
             actor.setHeight(height);
         }
         return actor;
     }
-
-
-
 
 
 }

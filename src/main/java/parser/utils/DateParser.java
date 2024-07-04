@@ -19,21 +19,21 @@ public class DateParser {
     public static LocalDate parseDate(String date) {
 
         if (date == null || date.isEmpty()) {
-            LOGGER.log(Level.WARNING, "Date string is null or empty.");
+            LOGGER.log(Level.WARNING, "la date est vide ou null");
             return null;
         }
 
         date = date.trim();
-        LOGGER.log(Level.INFO, "Attempting to parse date: {0}", date);
+        LOGGER.log(Level.INFO, "Date à parser: {0}", date);
 
         for (DateTimeFormatter formatter : DATE_FORMATTERS) {
             try {
                 return LocalDate.parse(date, formatter);
             } catch (DateTimeParseException e) {
-                LOGGER.log(Level.WARNING, "Failed to parse date: {0} with formatter: {1}", new Object[]{date, formatter});
+                LOGGER.log(Level.WARNING, "Impossible de parser la date avec le format: {0}", formatter);
                 // continue to the next format
             }
         }
-        throw new IllegalArgumentException("Invalid date format: " + date);
+        throw new IllegalArgumentException("Impossible de parser la date: " + date);
     }
 }
